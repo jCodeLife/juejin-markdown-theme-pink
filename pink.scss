@@ -1,0 +1,379 @@
+$monospace-font: Menlo, Monaco, Consolas, "Courier New", monospace;
+$line-space: 16px;
+$baseTxtColor: #353535;
+$titleColor: rgb(253, 80, 108);
+$strongColor: #fa6666;
+$codeColor: #ce306f;
+$codeBgColor: #fff;
+$blockquoteBgColor: #e97777;
+$aColor: #f87171;
+$lineColor: #bedcff;
+
+@mixin headTitle($padb: 4px, $fontSize: 24px, $mtop: 36px) {
+  padding-bottom: $padb;
+  margin-top: $mtop;
+  margin-bottom: 10px;
+  font-size: $fontSize;
+  line-height: 1.5;
+  color: $titleColor;
+}
+
+@mixin blockquoteColor {
+  color: #3b3b3a;
+  font-size: 0.85em;
+  border-left: 2px solid $strongColor;
+  background-color: $blockquoteBgColor;
+}
+
+.markdown-body {
+  word-break: break-word;
+  line-height: 1.75;
+  font-weight: 400;
+  font-size: 14px;
+  overflow-x: hidden;
+  color: $baseTxtColor;
+  background: rgba(253, 196, 206, 0.15);
+  h1 {
+    @include headTitle(4px, 28px);
+    padding-left: 6px;
+  }
+
+  h2 {
+    position: relative;
+    padding-left: 6px;
+    @include headTitle(10px, 24px);
+    border-bottom: 1px solid #ececec;
+  }
+
+  h3 {
+    position: relative;
+    @include headTitle(0, 20px, 30px);
+    padding-left: 6px;
+  }
+
+  h4 {
+    @include headTitle(0, 16px, 24px);
+    padding-left: 6px;
+  }
+
+  h5 {
+    @include headTitle(0, 14px, 18px);
+    padding-left: 6px;
+  }
+
+  h6 {
+    @include headTitle(0, 12px, 12px);
+    padding-left: 6px;
+  }
+
+  p {
+    line-height: inherit;
+    margin-top: $line-space;
+    margin-bottom: $line-space;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  hr {
+    position: relative;
+    width: 98%;
+    height: 1px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    background-image: linear-gradient(90deg, rgba(255, 68, 68, 0.8), $aColor, rgba(255, 68, 68, 0.8));
+    border-width: 0;
+    overflow: visible;
+  }
+
+  code {
+    padding: 0.065em 0.4em;
+    font-family: $monospace-font;
+    font-size: 0.75em;
+    color: $codeColor;
+    word-break: break-word;
+    overflow-x: auto;
+    background-color: $codeBgColor;
+    border-radius: 2px;
+  }
+
+  pre {
+    font-family: $monospace-font;
+    overflow: auto;
+    position: relative;
+    line-height: 1.8;
+
+    > code {
+      display: block;
+      padding: 16px 12px;
+      margin: 0;
+      font-size: 12px;
+      color: #3b3b3a;
+      word-break: normal;
+      overflow-x: auto;
+      background: #f09090;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: $lineColor;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $strongColor;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  a {
+    position: relative;
+    text-decoration: none;
+    color: $codeColor;
+    border-bottom: 1px solid $lineColor;
+
+    &:hover {
+      color: $aColor;
+      border-bottom-color: $aColor;
+    }
+
+    &:active {
+      color: $aColor;
+    }
+
+    &::after {
+      position: absolute;
+      content: "";
+      top: 100%;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      border-bottom: 1px solid $lineColor;
+      transition: top 0.3s, opacity 0.3s;
+      transform: translate3d(0, 0, 0);
+    }
+
+    &:hover::after {
+      top: 0;
+      opacity: 1;
+      border-bottom-color: $aColor;
+    }
+  }
+
+  table {
+    display: inline-block !important;
+    font-size: 12px;
+    width: auto;
+    max-width: 100%;
+    overflow: auto;
+    border: 1px solid #c3e0fd;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    thead {
+      color: #000;
+      text-align: center;
+      font-size: 14px;
+      background: rgb(250, 160, 175);
+    }
+
+    tr:nth-child(2n) {
+      background-color: #f7fbff;
+    }
+
+    tr:hover {
+      background-color: #e0edf7;
+    }
+
+    th,
+    td {
+      padding: 12px 8px;
+      line-height: 24px;
+      border: 1px solid rgb(231, 223, 223);
+    }
+
+    th {
+      color: $titleColor;
+      background-color: rgb(250, 210, 217);
+    }
+
+    td {
+      min-width: 120px;
+    }
+  }
+
+  blockquote {
+    @include blockquoteColor;
+    padding: 1px 20px;
+    margin: 22px 0;
+
+    &::after {
+      display: block;
+      content: "";
+    }
+
+    & > p {
+      margin: 10px 0;
+    }
+
+    & > b,
+    & > strong {
+      color: $strongColor;
+    }
+  }
+
+  b,
+  strong {
+    color: $strongColor;
+  }
+
+  del {
+    color: #ccc;
+  }
+
+  ol,
+  ul {
+    padding-left: 28px;
+
+    li {
+      margin-bottom: 0;
+      list-style: inherit;
+
+      & .task-list-item {
+        list-style: none;
+
+        ul,
+        ol {
+          margin-top: 0;
+        }
+      }
+    }
+
+    ul,
+    ol {
+      margin-top: 4px;
+    }
+  }
+
+  ol li {
+    padding-left: 6px;
+  }
+
+  // details & summary
+  details {
+    & > summary {
+      outline: none;
+      color: $titleColor;
+      font-size: 20px;
+      font-weight: bolder;
+      border-bottom: 1px solid $lineColor;
+      cursor: pointer;
+    }
+
+    & > p {
+      padding: 10px 20px;
+      margin: 10px 0 0;
+      color: #666;
+      background-color: $blockquoteBgColor;
+      border: 2px dashed $strongColor;
+    }
+  }
+
+  // selection
+  h1::selection,
+  h2::selection,
+  h3::selection,
+  h4::selection,
+  h5::selection,
+  h6::selection {
+    color: $titleColor;
+    background-color: rgba(160, 200, 255, 0.15);
+  }
+
+  p::selection {
+    color: rgb(247, 6, 134);
+  }
+
+  p {
+    > strong::selection {
+      color: rgb(247, 6, 134);
+    }
+  }
+  code::selection {
+    color: rgb(247, 6, 134);
+  }
+
+  pre {
+    > code::selection {
+      color: rgb(247, 6, 134);
+    }
+  }
+
+  ol,
+  ul {
+    ::selection {
+      color: rgb(247, 6, 134);
+    }
+  }
+
+  .contains-task-list {
+    padding-left: 14px;
+    list-style: none;
+
+    input[type="checkbox"] {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: inherit;
+        height: inherit;
+        background: #f0f8ff;
+        border: 1px solid #add6ff;
+        border-radius: 2px;
+        box-sizing: border-box;
+        z-index: 1;
+      }
+
+      &:checked {
+        &::after {
+          content: "\2713";
+          position: absolute;
+          top: -12px;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 0;
+          height: 0;
+          color: #ff5555;
+          font-size: 20px;
+          font-weight: bold;
+          z-index: 2;
+        }
+      }
+    }
+  }
+
+  // @media
+  @media (max-width: 720px) {
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+  }
+}
